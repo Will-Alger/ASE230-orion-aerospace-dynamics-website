@@ -44,7 +44,8 @@ include_once "lib/csvReader.php";
             <a class="navbar-brand logo" href="index-1.html">
                 <!-- <img src="images/logo-dark.png" alt="" class="logo-dark" height="28" />
                 <img src="images/logo-light.png" alt="" class="logo-light" height="28" /> -->
-                <img src="images/orion.png" alt="" height="75" />
+                <img src="images/orion-dark.png" alt="" class="logo-dark" height="75" />
+                <img src="images/orion-light.png" alt="" class="logo-light" height="75" />
 
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
