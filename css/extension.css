@@ -1,0 +1,36 @@
+.team-img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.team-box .team-img-container {
+  position: relative;
+}
+
+.team-summary {
+  color: #dbd6d6 !important;
+}
+
+.team-box .team-summary {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(56, 55, 55, 0.5); /* semi-transparent black */
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.team-box:hover .team-img {
+  filter: blur(5px);
+}
+
+.team-box:hover .team-summary {
+  opacity: 1;
+}
