@@ -1,5 +1,6 @@
 <?php
 require_once('../../config.php');
+require_once('awards.php');
 
 $id = $_GET['id'];
 
@@ -11,22 +12,13 @@ while (($line = fgetcsv($fileHandle)) !== FALSE) {
 fclose($fileHandle);
 
 $header = array_shift($awards);
-
 $award = $awards[$id];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $year = $_POST['year'];
     $description = $_POST['description'];
 
-    $awards[$id] = [$year, $description];
-
-    array_unshift($awards, $header);
-
-    $fileHandle = fopen(root . '/data/awards.csv', 'w');
-    foreach ($awards as $award) {
-        fputcsv($fileHandle, $award);
-    }
-    fclose($fileHandle);
+    updateAward($id, $year, $description);
 
     header('Location: detail.php?id=' . $id);
     exit;

@@ -1,25 +1,15 @@
 <?php
 require_once('../../config.php');
+require_once('awards.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $year = $_POST['year'];
     $description = $_POST['description'];
 
-    $newAward = [$year, $description];
+    addAward($year, $description);
 
-    $lines = count(file(root . '/data/csv/awards.csv'));
-
-    $fileHandle = fopen(root . '/data/csv/awards.csv', 'a');
-
-    fseek($fileHandle, -1, SEEK_END);
-    $lastChar = fgetc($fileHandle);
-    if ($lastChar !== "\n") {
-        fwrite($fileHandle, "\n");
-    }
-
-    fputcsv($fileHandle, $newAward);
-    fclose($fileHandle);
-    header('Location: detail.php?id=' . ($lines - 1));
+    $lines = count(file(root . awards));
+    header('Location: detail.php?id=' . ($lines - 2));
     exit;
 }
 ?>

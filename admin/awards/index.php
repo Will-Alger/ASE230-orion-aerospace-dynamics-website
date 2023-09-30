@@ -1,5 +1,6 @@
 <?php
 require_once('../../config.php');
+require_once('awards.php');
 
 $fileHandle = fopen(root . '/data/csv/awards.csv', 'r');
 $awards = [];
@@ -9,6 +10,7 @@ while (($line = fgetcsv($fileHandle)) !== FALSE) {
 fclose($fileHandle);
 
 $header = array_shift($awards);
+
 ?>
 
 <!DOCTYPE html>
