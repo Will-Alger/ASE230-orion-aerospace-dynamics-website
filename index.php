@@ -3,6 +3,7 @@ require_once "config.php";
 include_once "lib/jsonReader.php";
 include_once "lib/textReader.php";
 include_once "lib/csvReader.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -167,7 +168,7 @@ include_once "lib/csvReader.php";
             </div>
             <!-- end row -->
 
-            <?php $teamData = readJsonFile('data/team.json'); ?>
+            <?php $teamData = readJsonFile(TEAM_DATA); ?>
             <div class="row">
                 <?php foreach ($teamData as $member) : ?>
                     <div class="col-lg-3 col-sm-6">
@@ -220,6 +221,23 @@ include_once "lib/csvReader.php";
         </div>
     </section>
 
+    <?php
+    // TODO: Upson sucessful submission have a banner that appears and disappears
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $subject = $_POST['subject'];
+        $comments = $_POST['comments'];
+        $date = date('Y-m-d H:i:s');
+
+        $data = ['name' => $name, 'email' => $email, 'subject' => $subject, 'comments' => $comments, 'date' => $date];
+
+        $filename = CONTACTS_DATA;
+
+        $success = writeJsonFile($filename, $data);
+    }
+    ?>
+
     <!-- Contact us start -->
     <section class="section bg-light" id="contact">
         <div class="container">
@@ -227,7 +245,7 @@ include_once "lib/csvReader.php";
                 <div class="col-lg-6">
                     <h2 class="fw-bold mb-4">Get in Touch</h2>
                     <div>
-                        <form method="post" name="myForm" onsubmit="return validateForm()">
+                        <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST" name="myForm">
                             <p id="error-msg"></p>
                             <div id="simple-msg"></div>
                             <div class="row">
