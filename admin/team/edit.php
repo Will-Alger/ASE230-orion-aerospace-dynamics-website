@@ -7,30 +7,30 @@ $members = getMembers();
 if (!isset($members[$id])) {
     die("Invalid member ID");
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $position = $_POST['position'];
     $description = $_POST['description'];
     $file_name = null;
 
-    // if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-    //     $file_name = $_FILES['image']['name'];
-    //     $file_tmp = $_FILES['image']['tmp_name'];
-    //     $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+        $file_name = $_FILES['image']['name'];
+        $file_tmp = $_FILES['image']['tmp_name'];
+        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
-    //     $allowed_extensions = array("jpeg", "jpg", "png");
+        $allowed_extensions = array("jpeg", "jpg", "png");
 
-    //     if (!in_array($file_ext, $allowed_extensions)) {
-    //         die("Extension not allowed, please choose a JPEG or PNG file.");
-    //     }
+        if (!in_array($file_ext, $allowed_extensions)) {
+            die("Extension not allowed, please choose a JPEG or PNG file.");
+        }
 
-    //     if (!move_uploaded_file($file_tmp, "../../images/team/" . $file_name)) {
-    //         die("Error uploading the file");
-    //     }
-    // }
+        if (!move_uploaded_file($file_tmp, "../../images/team/" . $file_name)) {
+            die("Error uploading the file");
+        }
+    }
 
-    $updatedMember = ['name' => $name, 'position' => $position, 'description' => $description, 'img' => $file_name];
+    $updatedMember = ['name' => "test", 'position' => 'test', 'description' => 'test', 'img' => 'test'];
+    updateMember(0, $updatedMember);
 
     if (!updateMember($id, $updatedMember)) {
         die("Error updating member");
