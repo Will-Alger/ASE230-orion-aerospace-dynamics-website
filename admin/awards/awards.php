@@ -67,3 +67,23 @@ function addAward($year, $description)
     fputcsv($fileHandle, $newAward);
     fclose($fileHandle);
 }
+
+function deleteAward($id)
+{
+    $filePath = root . awards;
+    $awards = getAwards($filePath);
+
+    if (!is_numeric($id) || $id < 0 || $id >= count($awards)) {
+        throw new Exception("Invalid ID: {$id}");
+    }
+
+    array_splice($awards, $id, 1);
+
+    $fileHandle = fopen($filePath, 'w');
+
+    foreach ($awards as $award) {
+        fputcsv($fileHandle, $award);
+    }
+
+    fclose($fileHandle);
+}

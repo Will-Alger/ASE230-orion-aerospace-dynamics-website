@@ -1,26 +1,13 @@
 <?php
 require_once('../../config.php');
+require_once('awards.php');
 
 $id = $_GET['id'];
 
 if ($_POST) {
     if (isset($_POST['confirm']) && $_POST['confirm'] === 'Yes') {
 
-        $fileHandle = fopen(root . '/data/csv/awards.csv', 'r');
-        $awards = [];
-        while (($line = fgetcsv($fileHandle)) !== FALSE) {
-            $awards[] = $line;
-        }
-        fclose($fileHandle);
-
-        unset($awards[$id + 1]);
-        $awards = array_values($awards);
-
-        $fileHandle = fopen(root . '/data/csv/awards.csv', 'w');
-        foreach ($awards as $award) {
-            fputcsv($fileHandle, $award);
-        }
-        fclose($fileHandle);
+        deleteAward($id);
 
         header('Location: index.php');
         exit;
