@@ -1,5 +1,4 @@
 <?php
-require_once('../../config.php');
 require_once('awards.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -9,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     addAward($year, $description);
 
-    $lines = count(file(root . awards));
+    $lines = count(file(AWARDS_DATA));
     header('Location: detail.php?id=' . ($lines - 2));
 
     exit;

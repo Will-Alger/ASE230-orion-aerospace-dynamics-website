@@ -1,17 +1,9 @@
 <?php
-require_once('../../config.php');
 require_once('awards.php');
 
-$fileHandle = fopen(root . awards, 'r');
-$awards = [];
-while (($line = fgetcsv($fileHandle)) !== FALSE) {
-    $awards[] = $line;
-}
-fclose($fileHandle);
+$awards = getAwards(AWARDS_DATA);
 
 $header = array_shift($awards);
-
-
 ?>
 
 <!DOCTYPE html>

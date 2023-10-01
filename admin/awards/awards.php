@@ -1,5 +1,6 @@
 <?php
 require_once('../../config.php');
+require_once('../../lib/csvReader.php');
 
 function getAwards($filePath)
 {
@@ -28,7 +29,7 @@ function getAward($filePath, $id)
 }
 function updateAward($id, $year = null, $description = null)
 {
-    $filePath = root . awards;
+    $filePath = AWARDS_DATA;
     $awards = getAwards($filePath);
 
     $id = $id + 1;
@@ -60,7 +61,7 @@ function updateAward($id, $year = null, $description = null)
 
 function addAward($year, $description)
 {
-    $filePath = root . awards;
+    $filePath = AWARDS_DATA;
 
     $newAward = [$year, $description];
     $fileHandle = fopen($filePath, 'a');
@@ -70,7 +71,7 @@ function addAward($year, $description)
 
 function deleteAward($id)
 {
-    $filePath = root . awards;
+    $filePath = AWARDS_DATA;
     $awards = getAwards($filePath);
 
     if (!is_numeric($id) || $id < 0 || $id >= count($awards)) {

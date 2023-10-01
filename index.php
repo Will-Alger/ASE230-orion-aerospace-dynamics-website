@@ -1,5 +1,5 @@
 <?php
-include_once "config/config.php";
+require_once "config.php";
 include_once "lib/jsonReader.php";
 include_once "lib/textReader.php";
 include_once "lib/csvReader.php";

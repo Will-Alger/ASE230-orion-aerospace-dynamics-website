@@ -1,10 +1,9 @@
 <?php
-require_once('../../config.php');
 require_once('awards.php');
 
 $id = $_GET['id'];
 
-$awards = getAwards(root . awards);
+$awards = getAwards(AWARDS_DATA);
 $header = array_shift($awards);
 $award = $awards[$id];
 
