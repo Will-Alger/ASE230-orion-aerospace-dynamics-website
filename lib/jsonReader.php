@@ -9,7 +9,7 @@ function readJsonFile($filename)
     return json_decode($str, true);
 }
 
-function writeJsonFile($filename, $data)
+function appendJsonFile($filename, $data)
 {
     $existing_data = readJsonFile($filename);
 
@@ -19,4 +19,10 @@ function writeJsonFile($filename, $data)
     $existing_data[] = $data;
     $json_data = json_encode($existing_data, JSON_PRETTY_PRINT);
     return file_put_contents($filename, $json_data);
+}
+
+function writeJsonFile($filename, $data)
+{
+    $json_data = json_encode($data, JSON_PRETTY_PRINT);
+    return file_put_contents($filename, $json_data) !== false;
 }

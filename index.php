@@ -113,14 +113,14 @@ include_once "lib/csvReader.php";
                 <?php
                 $servicesData = readJsonFile(PRODUCTS_DATA);
                 if ($servicesData) {
-                    foreach ($servicesData as $key => $service) { ?>
+                    foreach ($servicesData as $index => $service) { ?>
                         <div class="col-lg-6">
                             <div class="service-box position-relative">
                                 <div class="service-box-content p-4">
                                     <div class="icon-mono service-icon avatar-md mx-auto mb-4">
                                         <i class="" data-feather="box"></i>
                                     </div>
-                                    <h4 class="mb-3 font-size-22 text-left"><?= $key; ?></h4>
+                                    <h4 class="mb-3 font-size-22 text-left"><?= $service['name']; ?></h4>
                                     <p class="text-muted mb-0 text-left"><?= $service['description']; ?></p>
                                     <?php if (isset($service['applications'])) : ?>
                                         <hr>
@@ -234,7 +234,7 @@ include_once "lib/csvReader.php";
 
         $filename = CONTACTS_DATA;
 
-        $success = writeJsonFile($filename, $data);
+        $success = appendJsonFile($filename, $data);
     }
     ?>
 
