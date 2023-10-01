@@ -1,9 +1,8 @@
 <?php
-require_once('../../config.php');
-require_once('../../lib/jsonReader.php');
+require_once('products.php');
 
 $id = $_GET['id'];
-$products = readJsonFile(PRODUCTS_DATA);
+$products = getProducts();
 
 if (!isset($products[$id])) {
     die("Invalid product ID");

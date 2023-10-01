@@ -1,6 +1,4 @@
 <?php
-require_once('../../config.php');
-require_once('../../lib/jsonReader.php');
 require_once('products.php');
 $products = getProducts();
 ?>

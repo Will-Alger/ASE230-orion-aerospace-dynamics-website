@@ -33,7 +33,7 @@
     },
     {
         "name": "updated name 2",
-        "description": "etst",
+        "description": "Sample description",
         "applications": {
             "added application": "description",
             "added another": "test",

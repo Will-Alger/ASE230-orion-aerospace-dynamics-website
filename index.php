@@ -174,7 +174,7 @@ include_once "lib/csvReader.php";
                     <div class="col-lg-3 col-sm-6">
                         <div class="team-box mt-4 position-relative overflow-hidden rounded text-center shadow">
                             <div class="position-relative overflow-hidden">
-                                <img src="<?= $member['img'] ?>" alt="" class="team-img img-fluid d-block mx-auto" />
+                                <img src="<?= "images/team/" . $member['img'] ?>" alt="" class="team-img img-fluid d-block mx-auto" />
                                 <div class="team-summary"><?= $member['description'] ?></div>
                             </div>
                             <div class="p-4">
