@@ -77,7 +77,7 @@ function deleteAward($id)
         throw new Exception("Invalid ID: {$id}");
     }
 
-    array_splice($awards, $id, 1);
+    array_splice($awards, $id + 1, 1);
 
     $fileHandle = fopen($filePath, 'w');
 
