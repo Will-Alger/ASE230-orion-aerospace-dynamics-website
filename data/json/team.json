@@ -1,32 +1,38 @@
 [
-    {
-        "name": "test",
-        "position": "test",
-        "description": "test",
-        "img": "test"
-    },
-    {
-        "name": "Dr. Hiroshi Nakamura",
-        "position": "CTO",
-        "description": "A genius in aerospace engineering, Dr. Nakamura's innovations form the backbone of Orion's groundbreaking spacecrafts and aerial vehicles.",
-        "img": "2.jpg"
-    },
-    {
-        "name": "Leo Rodriguez",
-        "position": "Chief of Design",
-        "description": "With a penchant for blending aesthetics with functionality, Leo ensures that every Orion product is not just effective but also a piece of art.",
-        "img": "3.jpg"
-    },
-    {
-        "name": "Ava O'Connell",
-        "position": "VP of Operations",
-        "description": "Managing the intricate logistics of aerospace projects is Ava's forte. Her meticulous planning ensures that missions are executed flawlessly.",
-        "img": "4.jpg"
-    },
-    {
-        "name": "Dr. Imani Okoro",
-        "position": "Head of AeroAcademy\u2122",
-        "description": "A space historian and a former NASA educator, Dr. Okoro shapes the curriculum, ensuring that the academy produces the best minds in aerospace.",
-        "img": "5.jpg"
-    }
+  {
+    "name": "Bob Dylan",
+    "position": "being Bob Dylan",
+    "description": "what can I say, he's bob dylan :)",
+    "img": "dylan.jpeg"
+  },
+  {
+    "name": "Dr. Hiroshi Nakamura",
+    "position": "CTO",
+    "description": "A genius in aerospace engineering, Dr. Nakamura's innovations form the backbone of Orion's groundbreaking spacecrafts and aerial vehicles.",
+    "img": "2.jpg"
+  },
+  {
+    "name": "Leo Rodriguez",
+    "position": "Chief of Design",
+    "description": "With a penchant for blending aesthetics with functionality, Leo ensures that every Orion product is not just effective but also a piece of art.",
+    "img": "3.jpg"
+  },
+  {
+    "name": "Ava O'Connell",
+    "position": "VP of Operations",
+    "description": "Managing the intricate logistics of aerospace projects is Ava's forte. Her meticulous planning ensures that missions are executed flawlessly.",
+    "img": "4.jpg"
+  },
+  {
+    "name": "Dr. Imani Okoro",
+    "position": "Head of AeroAcademy\u2122",
+    "description": "A space historian and a former NASA educator, Dr. Okoro shapes the curriculum, ensuring that the academy produces the best minds in aerospace.",
+    "img": "5.jpg"
+  },
+  {
+    "name": "Billy Joel",
+    "position": "Jammin",
+    "description": "Doing his thing.",
+    "img": "f9d9c240b6b7a5e3cf08b37fd9a91096.jpg"
+  }
 ]

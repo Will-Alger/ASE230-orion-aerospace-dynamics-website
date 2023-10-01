@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $position = $_POST['position'];
     $description = $_POST['description'];
-    $file_name = null;
+    $file_name = $members[$id]['img'];
 
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $file_name = $_FILES['image']['name'];
@@ -29,8 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $updatedMember = ['name' => "test", 'position' => 'test', 'description' => 'test', 'img' => 'test'];
-    updateMember(0, $updatedMember);
+    $updatedMember = ['name' => $name, 'position' => $position, 'description' => $description, 'img' => $file_name];
 
     if (!updateMember($id, $updatedMember)) {
         die("Error updating member");

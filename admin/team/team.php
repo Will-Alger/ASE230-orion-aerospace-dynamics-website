@@ -32,15 +32,13 @@ function updateMember($id, $data)
     return false;
 }
 
-function deleteTeamMember($id)
+function deleteMember($id)
 {
     $team = getMembers();
     if (isset($team[$id])) {
         unset($team[$id]);
         $team = array_values($team);
-        $json_data = json_encode($team, JSON_PRETTY_PRINT);
-        file_put_contents(TEAM_DATA, $json_data);
-        return true;
+        return writeJsonFile(TEAM_DATA, $team);
     }
     return false;
 }
