@@ -4,33 +4,23 @@ require_once('../../lib/csvReader.php');
 
 function getAwards($filePath)
 {
-    $fileHandle = fopen($filePath, 'r');
-    $awards = [];
-    while (($line = fgetcsv($fileHandle)) !== FALSE) {
-        $awards[] = $line;
-    }
-    fclose($fileHandle);
-    return $awards;
+    return readCsvFile($filePath);
 }
 
 function getAward($filePath, $id)
 {
-    $fileHandle = fopen($filePath, 'r');
-    $index = 0;
-    while (($line = fgetcsv($fileHandle)) !== FALSE) {
-        if ($index == $id) {
-            fclose($fileHandle);
-            return $line;
-        }
-        $index++;
+    $awards = readCsvFile($filePath);
+
+    if ($id >= 0 && $id < count($awards)) {
+        return $awards[$id];
     }
-    fclose($fileHandle);
+
     return null;
 }
 function updateAward($id, $year = null, $description = null)
 {
     $filePath = AWARDS_DATA;
-    $awards = getAwards($filePath);
+    $awards = readCsvFile($filePath);
 
     $id = $id + 1;
 
@@ -50,41 +40,26 @@ function updateAward($id, $year = null, $description = null)
         $awards[$id][1] = $description;
     }
 
-    $fileHandle = fopen($filePath, 'w');
-    fputcsv($fileHandle, $awards[0]);
-    for ($i = 1; $i < count($awards); $i++) {
-        fputcsv($fileHandle, $awards[$i]);
-    }
-    fclose($fileHandle);
+    writeCsvFile($filePath, $awards);
 }
 
 
 function addAward($year, $description)
 {
-    $filePath = AWARDS_DATA;
+    $awards = readCsvFile(AWARDS_DATA);
 
     $newAward = [$year, $description];
-    $fileHandle = fopen($filePath, 'a');
-    fputcsv($fileHandle, $newAward);
-    fclose($fileHandle);
+    array_push($awards, $newAward);
+
+    writeCsvFile(AWARDS_DATA, $awards);
 }
 
 function deleteAward($id)
 {
-    $filePath = AWARDS_DATA;
-    $awards = getAwards($filePath);
-
+    $awards = readCsvFile(AWARDS_DATA);
     if (!is_numeric($id) || $id < 0 || $id >= count($awards)) {
         throw new Exception("Invalid ID: {$id}");
     }
-
     array_splice($awards, $id + 1, 1);
-
-    $fileHandle = fopen($filePath, 'w');
-
-    foreach ($awards as $award) {
-        fputcsv($fileHandle, $award);
-    }
-
-    fclose($fileHandle);
+    writeCsvFile(AWARDS_DATA, $awards);
 }

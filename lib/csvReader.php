@@ -12,3 +12,12 @@ function readCsvFile($filename)
     }
     return $fileContent;
 }
+
+function writeCsvFile($filename, $data)
+{
+    $fileHandle = fopen($filename, 'w');
+    foreach ($data as $row) {
+        fputcsv($fileHandle, $row);
+    }
+    fclose($fileHandle);
+}
