@@ -1,9 +1,12 @@
 <?php
 require_once('awards.php');
+require_once('../utility/CsvHelper.php');
+require_once('../../config.php');
 
-$awards = getAwards(AWARDS_DATA);
+$awardManager = new AwardManager(AWARDS_DATA);
 
-$header = array_shift($awards);
+$awards = $awardManager->getAwards();
+
 ?>
 
 <!DOCTYPE html>
@@ -18,21 +21,24 @@ $header = array_shift($awards);
 
 <body>
     <div class="container">
+        <h1>Awards Data</h1>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <?php foreach ($header as $head) : ?>
-                        <th><?= htmlspecialchars($head); ?></th>
-                    <?php endforeach; ?>
+                    <th>ID</th>
+                    <th>Year</th>
+                    <th>Award</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($awards as $index => $award) : ?>
+                <?php foreach ($awards as $award) : ?>
                     <tr>
-                        <td><a href="detail.php?id=<?= $index ?>"><?= htmlspecialchars($award[0]); ?></a></td>
-                        <td><?= htmlspecialchars($award[1]); ?></td>
+                        <td><a href="detail.php?id=<?= urlencode($award->id) ?>"><?= htmlspecialchars($award->id); ?></a></td>
+                        <td><?= htmlspecialchars($award->year); ?></td>
+                        <td><?= htmlspecialchars($award->description); ?></td>
                     </tr>
                 <?php endforeach; ?>
+            </tbody>
         </table>
         <a href="create.php" class="btn btn-success">Add New Award</a>
     </div>

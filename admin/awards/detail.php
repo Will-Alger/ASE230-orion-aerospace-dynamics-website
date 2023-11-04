@@ -1,15 +1,31 @@
 <?php
 require_once('awards.php');
+require_once('../utility/CsvHelper.php');
+require_once('../../config.php');
 
-$id = $_GET['id'];
+$awardManager = new AwardManager(AWARDS_DATA);
 
-$awards = getAwards(AWARDS_DATA);
-$header = array_shift($awards);
-$award = $awards[$id];
+$id = isset($_GET['id']) ? (int) $_GET['id'] : null;
+
+if ($id === null) {
+    die('No award ID provided.');
+}
+
+$award = null;
+$awards = $awardManager->getAwards();
+
+foreach ($awards as $item) {
+    if ($item->id == $id) {
+        $award = $item;
+        break;
+    }
+}
+
+if (!$award) {
+    die('Award not found.');
+}
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,13 +41,14 @@ $award = $awards[$id];
         <h1 class="mb-4">Award Details</h1>
         <div class="card">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong><?= htmlspecialchars($header[0]); ?>:</strong> <?= htmlspecialchars($award[0]); ?></li>
-                <li class="list-group-item"><strong><?= htmlspecialchars($header[1]); ?>:</strong> <?= htmlspecialchars($award[1]); ?></li>
+                <li class="list-group-item"><strong>ID:</strong> <?= htmlspecialchars($award->id); ?></li>
+                <li class="list-group-item"><strong>Year:</strong> <?= htmlspecialchars($award->year); ?></li>
+                <li class="list-group-item"><strong>Description:</strong> <?= htmlspecialchars($award->description); ?></li>
             </ul>
         </div>
         <div class="mt-4">
-            <a href="edit.php?id=<?= $id ?>" class="btn btn-primary mr-2">Edit</a>
-            <a href="delete.php?id=<?= $id ?>" class="btn btn-danger mr-2">Delete</a>
+            <a href="edit.php?id=<?= urlencode($award->id) ?>" class="btn btn-primary mr-2">Edit</a>
+            <a href="delete.php?id=<?= urlencode($award->id) ?>" class="btn btn-danger mr-2">Delete</a>
             <a href="index.php" class="btn btn-secondary">Back to List</a>
         </div>
     </div>
