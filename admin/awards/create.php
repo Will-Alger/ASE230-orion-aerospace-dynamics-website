@@ -1,16 +1,15 @@
 <?php
 require_once('awards.php');
+$awardManager = new AwardManager(AWARDS_DATA);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $year = $_POST['year'];
     $description = $_POST['description'];
 
-    addAward($year, $description);
+    $newAward = new Award($year, $description);
+    $awardManager->addAward($newAward);
 
-    $lines = count(file(AWARDS_DATA));
-    header('Location: detail.php?id=' . ($lines - 2));
-
+    header('Location: index.php');
     exit;
 }
 ?>
@@ -28,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="container">
         <h1>Add New Award</h1>
-        <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
+        <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
             <div class="form-group">
                 <label for="year">Year</label>
                 <select class="form-control" id="year" name="year">
@@ -43,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <input type="text" class="form-control" id="description" name="description">
+                <input type="text" class="form-control" id="description" name="description" required>
             </div>
             <button type="submit" class="btn btn-primary">Add Award</button>
             <a href="index.php" class="btn btn-danger">Cancel</a>

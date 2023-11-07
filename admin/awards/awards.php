@@ -1,6 +1,7 @@
 <?php
 require_once('../../config.php');
-require_once('../../lib/csvReader.php');
+require_once '../utility/CsvHelper.php';
+
 
 // function getAwards($filePath)
 // {
@@ -65,7 +66,7 @@ require_once('../../lib/csvReader.php');
 // }
 
 
-require_once '../utility/CsvHelper.php';
+
 
 
 class Award
@@ -102,6 +103,17 @@ class AwardManager
         }
 
         return $awards;
+    }
+
+    public function getAward($id)
+    {
+        $awards = $this->getAwards();
+        foreach ($awards as $award) {
+            if ((int) $award->id === (int) $id) {
+                return $award;
+            }
+        }
+        return null;
     }
 
     public function addAward(Award $award)

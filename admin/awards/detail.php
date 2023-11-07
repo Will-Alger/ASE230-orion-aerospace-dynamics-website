@@ -1,8 +1,5 @@
 <?php
 require_once('awards.php');
-require_once('../utility/CsvHelper.php');
-require_once('../../config.php');
-
 $awardManager = new AwardManager(AWARDS_DATA);
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : null;
@@ -11,15 +8,7 @@ if ($id === null) {
     die('No award ID provided.');
 }
 
-$award = null;
-$awards = $awardManager->getAwards();
-
-foreach ($awards as $item) {
-    if ($item->id == $id) {
-        $award = $item;
-        break;
-    }
-}
+$award = $awardManager->getAward($id);
 
 if (!$award) {
     die('Award not found.');

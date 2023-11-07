@@ -1,17 +1,20 @@
 <?php
 require_once('awards.php');
+$awardManager = new AwardManager(AWARDS_DATA);
 
-$id = $_GET['id'];
+$id = isset($_GET['id']) ? (int) $_GET['id'] : null;
 
-if ($_POST) {
+if ($id === null) {
+    die('No award ID provided.');
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['confirm']) && $_POST['confirm'] === 'Yes') {
-
-        deleteAward($id);
-
+        $awardManager->deleteAward($id); // Use the deleteAward method to delete the award
         header('Location: index.php');
         exit;
     } else {
-        header("Location: detail.php?id=$id");
+        header("Location: detail.php?id=" . urlencode($id));
         exit;
     }
 }
@@ -28,10 +31,13 @@ if ($_POST) {
 
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4">Are you sure you want to delete?</h1>
-        <form method="post">
-            <button type="submit" name="confirm" value="Yes" class="btn btn-danger mr-2">Yes</button>
-            <button type="submit" name="confirm" value="No" class="btn btn-primary">No</button>
+        <h1 class="mb-4">Are you sure you want to delete this award?</h1>
+        <form action="delete.php?id=<?= htmlspecialchars($id); ?>" method="post">
+            <div class="form-group">
+                <input type="hidden" name="id" value="<?= htmlspecialchars($id); ?>">
+                <button type="submit" name="confirm" value="Yes" class="btn btn-danger mr-2">Yes</button>
+                <button type="submit" name="confirm" value="No" class="btn btn-primary">No</button>
+            </div>
         </form>
     </div>
 </body>

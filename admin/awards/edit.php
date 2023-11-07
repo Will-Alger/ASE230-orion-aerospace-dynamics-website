@@ -1,23 +1,29 @@
 <?php
 require_once('awards.php');
+$awardManager = new AwardManager(AWARDS_DATA);
 
-$id = $_GET['id'];
+$id = isset($_GET['id']) ? (int) $_GET['id'] : null;
 
-$fileHandle = fopen(AWARDS_DATA, 'r');
-$awards = [];
-while (($line = fgetcsv($fileHandle)) !== FALSE) {
-    $awards[] = $line;
+if ($id === null) {
+    die('No award ID provided.');
 }
-fclose($fileHandle);
 
-$header = array_shift($awards);
-$award = $awards[$id];
+$award = $awardManager->getAward($id);
+
+if (!$award) {
+    die('Award not found.');
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $year = $_POST['year'];
     $description = $_POST['description'];
 
-    updateAward($id, $year, $description);
+    $newData = [
+        'year' => $year,
+        'description' => $description
+    ];
+
+    $awardManager->updateAward($id, $newData);
 
     header('Location: detail.php?id=' . $id);
     exit;
@@ -38,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="container">
         <h1>Edit Award</h1>
-        <form action="<?= $_SERVER['PHP_SELF'] ?>?id=<?= $id ?>" method="POST">
+        <form action="edit.php?id=<?= urlencode($id) ?>" method="POST">
             <div class="form-group">
                 <label for="year">Year</label>
                 <select class="form-control" id="year" name="year">
@@ -47,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $endYear = $startYear - 100;
                     for ($i = $startYear; $i >= $endYear; $i--) {
                         echo "<option value='$i'";
-                        if ($i == $award[0]) {
+                        if ($i == $award->year) {
                             echo " selected";
                         }
                         echo ">$i</option>";
@@ -57,10 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <input type="text" class="form-control" id="description" name="description" value="<?= htmlspecialchars($award[1]); ?>">
+                <input type="text" class="form-control" id="description" name="description" value="<?= htmlspecialchars($award->description); ?>">
             </div>
             <button type="submit" class="btn btn-primary">Save Changes</button>
-            <a href="detail.php?id=<?= $id ?>" class="btn btn-danger">Cancel</a>
+            <a href="detail.php?id=<?= urlencode($award->id) ?>" class="btn btn-danger">Cancel</a>
         </form>
     </div>
 </body>
