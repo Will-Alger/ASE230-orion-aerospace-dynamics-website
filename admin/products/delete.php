@@ -1,17 +1,16 @@
 <?php
 require_once('products.php');
 
-$id = $_GET['id'];
+$productManager = new ProductManager(PRODUCTS_DATA);
+$id = isset($_GET['id']) ? (int) $_GET['id'] : null;
 
-if ($_POST) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['confirm']) && $_POST['confirm'] === 'Yes') {
-
-        deleteProduct($id);
-
+        $productManager->deleteProduct($id);
         header('Location: index.php');
         exit;
     } else {
-        header("Location: detail.php?id=$id");
+        header("Location: detail.php?id=" . urlencode($id));
         exit;
     }
 }
@@ -28,8 +27,9 @@ if ($_POST) {
 
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4">Are you sure you want to delete?</h1>
+        <h1 class="mb-4">Are you sure you want to delete this product?</h1>
         <form method="post">
+            <input type="hidden" name="id" value="<?= htmlspecialchars($id); ?>">
             <button type="submit" name="confirm" value="Yes" class="btn btn-danger mr-2">Yes</button>
             <button type="submit" name="confirm" value="No" class="btn btn-primary">No</button>
         </form>

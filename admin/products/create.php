@@ -1,6 +1,8 @@
 <?php
 require_once('products.php');
 
+$productManager = new ProductManager(PRODUCTS_DATA);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $description = $_POST['description'];
@@ -10,16 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (strpos($key, 'application_name_') === 0) {
             $appNumber = explode('_', $key)[2];
             $appDescription = $_POST['application_desc_' . $appNumber];
-
             $applications[$value] = $appDescription;
         }
     }
 
-    addProduct([
-        'name' => $name,
-        'description' => $description,
-        'applications' => $applications,
-    ]);
+    $newProduct = new Product($name, $description, $applications);
+
+    $productManager->addProduct($newProduct);
 
     header('Location: index.php');
     exit;

@@ -1,6 +1,7 @@
 <?php
-require_once('../../config.php');
-require_once '../utility/CsvHelper.php';
+require_once(__DIR__ . '/../../config.php');
+require_once(root . '/admin/utility/CsvHelper.php');
+
 
 
 // function getAwards($filePath)
@@ -150,6 +151,9 @@ class AwardManager
         }
         return false;
     }
+
+
+    // TODO: possible update in the future. currently does not maintain ID order upon deletion.
 
     public function deleteAward($id)
     {

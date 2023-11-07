@@ -1,9 +1,10 @@
 <?php
-require_once "config.php";
+require_once("config.php");
 include_once "lib/jsonReader.php";
 include_once "lib/textReader.php";
 include_once "lib/csvReader.php";
-
+require_once("admin/awards/awards.php");
+require_once("admin/products/products.php");
 ?>
 
 <!DOCTYPE html>
@@ -111,22 +112,23 @@ include_once "lib/csvReader.php";
             </div>
             <div class="row">
                 <?php
-                $servicesData = readJsonFile(PRODUCTS_DATA);
+                $productManager = new ProductManager(PRODUCTS_DATA);
+                $servicesData = $productManager->getProducts();
                 if ($servicesData) {
-                    foreach ($servicesData as $index => $service) { ?>
+                    foreach ($servicesData as $service) { ?>
                         <div class="col-lg-6">
                             <div class="service-box position-relative">
                                 <div class="service-box-content p-4">
                                     <div class="icon-mono service-icon avatar-md mx-auto mb-4">
                                         <i class="" data-feather="box"></i>
                                     </div>
-                                    <h4 class="mb-3 font-size-22 text-left"><?= $service['name']; ?></h4>
-                                    <p class="text-muted mb-0 text-left"><?= $service['description']; ?></p>
-                                    <?php if (isset($service['applications'])) : ?>
+                                    <h4 class="mb-3 font-size-22 text-left"><?= htmlspecialchars($service->name); ?></h4>
+                                    <p class="text-muted mb-0 text-left"><?= htmlspecialchars($service->description); ?></p>
+                                    <?php if (isset($service->applications)) : ?>
                                         <hr>
                                         <h5 class="mt-3 text-left">Applications:</h5>
-                                        <?php foreach ($service['applications'] as $applicationName => $applicationDescription) : ?>
-                                            <p class="text-left text-muted"><strong><?= $applicationName; ?>:</strong> <?= $applicationDescription; ?></p>
+                                        <?php foreach ($service->applications as $applicationName => $applicationDescription) : ?>
+                                            <p class="text-left text-muted"><strong><?= htmlspecialchars($applicationName); ?>:</strong> <?= htmlspecialchars($applicationDescription); ?></p>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </div>
@@ -137,8 +139,8 @@ include_once "lib/csvReader.php";
                 ?>
             </div>
         </div>
-
     </section>
+
     <!-- Services end -->
 
     <section class="section" id="about">
@@ -201,25 +203,33 @@ include_once "lib/csvReader.php";
             </div>
             <div class="row">
                 <?php
-                $awardsData = readCsvFile(AWARDS_DATA);
-                array_shift($awardsData);
-                if ($awardsData) {
-                    foreach ($awardsData as $award) { ?>
+                $awardManager = new AwardManager(AWARDS_DATA);
+                $awards = $awardManager->getAwards();
+                if (!empty($awards)) {
+                    foreach ($awards as $award) {
+                ?>
                         <div class="col-lg-4">
                             <div class="card mt-4 border-0 shadow">
                                 <div class="card-body p-4" style="min-height:250px">
-                                    <h4 class="badge badge-soft-primary font-size-22 my-4"><a href="javascript: void(0);"><?= $award[0]; ?></a></h4>
-                                    <p class="text-muted"><?= $award[1]; ?></p>
+                                    <h4 class="badge badge-soft-primary font-size-22 my-4">
+                                        <!-- Use the award ID to create a link if needed -->
+                                        <span><?= htmlspecialchars($award->year); ?></span>
+                                    </h4>
+                                    <p class="text-muted"><?= htmlspecialchars($award->description); ?></p>
                                 </div>
                             </div>
                         </div>
                 <?php
                     }
+                } else {
+                    // Display a message if there are no awards
+                    echo '<div class="col"><p class="text-muted">No awards to display.</p></div>';
                 }
                 ?>
             </div>
         </div>
     </section>
+
 
     <?php
     // TODO: Upson sucessful submission have a banner that appears and disappears

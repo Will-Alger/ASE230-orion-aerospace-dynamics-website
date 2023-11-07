@@ -1,6 +1,9 @@
 <?php
 require_once('products.php');
-$products = getProducts();
+require_once('../../config.php');
+
+$productManager = new ProductManager(PRODUCTS_DATA);
+$products = $productManager->getProducts();
 ?>
 
 <!DOCTYPE html>
@@ -15,21 +18,21 @@ $products = getProducts();
 
 <body>
     <div class="container">
+        <h1>Our Products</h1>
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Product</th>
                     <th>Description</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                $products = array_values($products);
-                foreach ($products as $index => $product) :
-                ?>
+                <?php foreach ($products as $product) : ?>
                     <tr>
-                        <td><a href="detail.php?id=<?= $index ?>"><?= htmlspecialchars($product['name']); ?></a></td>
-                        <td><?= htmlspecialchars($product['description']); ?></td>
+                        <td><?= htmlspecialchars($product->id); ?></td>
+                        <td><a href="detail.php?id=<?= urlencode($product->id) ?>"><?= htmlspecialchars($product->name); ?></a></td>
+                        <td><?= htmlspecialchars($product->description); ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

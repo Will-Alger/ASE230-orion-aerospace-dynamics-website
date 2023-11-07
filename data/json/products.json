@@ -1,13 +1,16 @@
 [
     {
-        "name": "Galactic Cruiser",
+        "id": 1,
+        "name": "Galactic Cruiser (edit 11/7/2023)",
         "description": "An innovative spacecraft designed for deep space exploration, equipped with advanced life support systems and AI-driven navigation.",
         "applications": {
             "Stellar Drive Propulsion": "A proprietary system that allows the Cruiser to achieve faster-than-ever travel speeds, reducing interplanetary journey times.",
-            "Holodeck Entertainment": "A VR-based entertainment zone that simulates Earthly experiences, ensuring mental well-being during long space journeys."
+            "Holodeck Entertainment": "A VR-based entertainment zone that simulates Earthly experiences, ensuring mental well-being during long space journeys.",
+            "Portapotty teleportation": "A porta potty any where you need it"
         }
     },
     {
+        "id": 2,
         "name": "SkySailor Drones",
         "description": "Environmentally-friendly drones powered by solar and wind energy, suitable for both recreational and professional use.",
         "applications": {
@@ -16,6 +19,7 @@
         }
     },
     {
+        "id": 3,
         "name": "Nebula Stations",
         "description": "Modular space habitats intended for research, tourism, and potential future colonization efforts.",
         "applications": {
@@ -24,22 +28,33 @@
         }
     },
     {
+        "id": 4,
         "name": "AeroAcademy",
-        "description": "An immersive trasining institution offering programs in aerospace engineering, astronaut training, and space tourism orientation.",
+        "description": "An immersive training institution offering programs in aerospace engineering, astronaut training, and space tourism orientation.",
         "applications": {
             "Virtual Spacewalks": "Training sessions in VR that prepare astronauts for extravehicular activities.",
             "Intergalactic Culture Modules": "Courses that introduce students to the speculated cultures and societal structures of potential extraterrestrial civilizations."
         }
     },
     {
+        "id": 5,
         "name": "updated name 23",
-        "description": "Sample description",
+        "description": "Sample description 2",
         "applications": {
             "added application": "description",
             "added another": "test",
             "added ": "another",
-            "and aniother": "test 4",
-            "and another": "test"
+            "and another": "test",
+            "spongebob": "squarepants"
+        }
+    },
+    {
+        "id": 6,
+        "name": "product manager",
+        "description": "products now controlled with objects!",
+        "applications": {
+            "sample 1": "test",
+            "sample 2": "test"
         }
     }
 ]

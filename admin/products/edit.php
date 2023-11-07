@@ -1,9 +1,12 @@
 <?php
 require_once('products.php');
 
+$productManager = new ProductManager(PRODUCTS_DATA);
+$id = isset($_GET['id']) ? (int) $_GET['id'] : null;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['id'];
-    $name = $_POST['name'];
+    $id = $_POST['id']; // Make sure to sanitize this input
+    $name = $_POST['name']; // and these as well
     $description = $_POST['description'];
 
     $applications = [];
@@ -11,22 +14,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (strpos($key, 'application_name_') === 0) {
             $appNumber = explode('_', $key)[2];
             $appDescription = $_POST['application_desc_' . $appNumber];
-
             $applications[$value] = $appDescription;
         }
     }
-    updateProduct($id, [
+
+    $productManager->updateProduct($id, [
         'name' => $name,
         'description' => $description,
         'applications' => $applications,
     ]);
 
-    header('Location: detail.php?id=' . $id);
+    header('Location: detail.php?id=' . urlencode($id));
     exit;
 }
 
-$product = getProduct($_GET['id']);
+$product = $productManager->getProduct($id);
 
+if (!$product) {
+    die("Invalid product ID");
+}
 ?>
 
 <!DOCTYPE html>
@@ -46,11 +52,11 @@ $product = getProduct($_GET['id']);
             <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" value="<?= $product['name'] ?>">
+                <input type="text" class="form-control" id="name" name="name" value="<?= $product->name ?>">
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <input type="text" class="form-control" id="description" name="description" value="<?= $product['description'] ?>">
+                <input type="text" class="form-control" id="description" name="description" value="<?= $product->description ?>">
             </div>
             <div id="applications">
 
@@ -82,7 +88,7 @@ $product = getProduct($_GET['id']);
                 $("#applications").append(template);
             });
 
-            var applications = <?= json_encode($product['applications']) ?>;
+            var applications = <?= json_encode($product->applications) ?>;
 
             for (var appName in applications) {
                 i++;
